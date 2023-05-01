@@ -1,0 +1,114 @@
+html {
+  background-color: #CEC4D5;
+  font-family: "Trebuchet MS", "Helvetica", sans-serif;
+}
+
+h1 {
+  margin: 10px auto;
+  text-align: center;
+  color: #6F0AAA;
+}
+
+.textarea {
+  display: block;
+  width: 700px;
+  height: 200px;
+  margin: 10px auto 10px;
+  padding: 10px;
+  font-size: 18px;
+  color: #444444;
+  background-color: #DEC6ED;
+}
+
+.keyboard {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 8px;
+  column-gap: 6px;
+
+  width: 698px;
+  margin: 0 auto;
+  padding: 5px;
+  background: #888888;
+  border: 3px solid #222222;
+  border-radius: 5px;
+}
+
+.keyboard-but {
+  display: block;
+  background-color: #444444;
+  width: 40px;
+  height: 40px;
+}
+
+.black {
+  background-color: #222222;
+}
+
+.system,
+.ctrl-alt,
+.full-for-print {
+  margin: 10px auto;
+  text-align: center;
+}
+
+.Backspace,
+.CapsLock,
+.shift-l {
+  width: 100px;
+}
+
+.Tab {
+  width: 50px;
+}
+
+.del {
+  width: 44px;
+}
+
+.Enter,
+.shift-r {
+  width: 86px;
+}
+
+.Space {
+  width: 330px;
+}
+
+.hidden {
+  display: none;
+}
+
+.keyboard-but {
+  text-align: center;
+  min-height: 40px;
+  line-height: 40px;
+  color: #DEC6ED;
+  border-radius: 3px;
+  transition: 0.3s;
+}
+
+.keyboard-but:hover {
+  background-color: #794F92;
+}
+
+.but.active {
+  border-radius: 50px;
+  background-color: #BF91ED;
+}
+
+.but.remove {
+  animation: key-animation 0.5s forwards;
+}
+
+@keyframes key-animation {
+  0% {
+    border-radius: 50px;
+    background-color: #BF91ED;
+  }
+  100% {
+    border-radius: 3px;
+    background-color: #444444;
+  }
+}
+
