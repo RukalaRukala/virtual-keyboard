@@ -41,6 +41,10 @@ h1 {
   height: 40px;
 }
 
+.black {
+  background-color: #222222;
+}
+
 .system,
 .ctrl-alt {
   margin: 10px auto;
@@ -80,4 +84,9 @@ h1 {
   line-height: 40px;
   color: #DEC6ED;
   border-radius: 3px;
+  transition: 0.3s;
+}
+
+.keyboard-but:hover {
+  background-color: #794F92;
 }
