@@ -20,11 +20,11 @@ const symbolList = [['`', '~', 'ё', 'Ё', 'tilda', 'let-ё'], ['1', '!', '1', '
 ['n', 'N', 'т', 'Т', 'let-n', 'let-т'], ['m', 'M', 'ь', 'Ь', 'let-m', 'let-ь'], [',', '<', 'б', 'Б', 'comma', 'let-б'],
 ['.', '>', 'ю', 'Ю', 'dot', 'let-ю'], ['/', '?', '.', ',', 'slash', 'let-.'], ['&#9650;', '&#9650;', '&#9650;', '&#9650;', 'but-up black', 'ArrowUp'],
 ['Shift', 'Shift', 'Shift', 'Shift', 'shift shift-r black', 'Shift'],
-['Ctrl', 'Ctrl', 'Ctrl', 'Ctrl', 'ctrl ctrl-l black', 'Control'], ['Win', 'Win', 'Win', 'Win', 'win black', 'Meta'],
-['Alt', 'Alt', 'Alt', 'Alt', 'alt alt-l black', 'Alt'], ['', '', '', '', 'Space', 'Space'],
-['Alt', 'Alt', 'Alt', 'Alt', 'alt alt-r black', 'Alt'], ['&#9668;', '&#9668;', '&#9668;', '&#9668;', 'but-left  black', 'ArrowLeft'],
+['Ctrl', 'Ctrl', 'Ctrl', 'Ctrl', 'ctrl ctrl-l black', 'ControlLeft'], ['Win', 'Win', 'Win', 'Win', 'win black', 'MetaLeft'],
+['Alt', 'Alt', 'Alt', 'Alt', 'alt alt-l black', 'AltLeft'], ['', '', '', '', 'Space', 'Space'],
+['Alt', 'Alt', 'Alt', 'Alt', 'alt alt-r black', 'AltRight'], ['&#9668;', '&#9668;', '&#9668;', '&#9668;', 'but-left  black', 'ArrowLeft'],
 ['&#9660;', '&#9660;', '&#9660;', '&#9660;', 'but-down black', 'ArrowDown'], ['&#9658;', '&#9658;', '&#9658;', '&#9658;', 'but-right black', 'ArrowRight'],
-['Ctrl', 'Ctrl', 'Ctrl', 'Ctrl', 'ctrl ctrl-r  black', 'Control']];
+['Ctrl', 'Ctrl', 'Ctrl', 'Ctrl', 'ctrl ctrl-r  black', 'ControlRight']];
 
 const wrapper = document.createElement('div');
 wrapper.setAttribute('class', 'wrapper');
@@ -73,18 +73,28 @@ discription.setAttribute('class', 'system');
 wrapper.appendChild(discription);
 
 const instuction = document.createElement('p');
-instuction.textContent = 'Для переключения языка комбинация: левыe ctrl + alt';
+instuction.textContent = 'Для переключения языка комбинация: shift + alt (с любой стороны)';
 instuction.setAttribute('class', 'ctrl-alt');
 wrapper.appendChild(instuction);
 
-changeRadius = (event) => {
-  const name = event.target.className;
-  document.querySelector(`.${name.split(' ')[2]}`).style.borderRadius = '50px';
-  event.stopPropagation();
-};
+const instuctionTab = document.createElement('p');
+instuctionTab.textContent = 'Перед началом ввода текста нажмите Tab для отображения в диалоговом окне';
+instuctionTab.setAttribute('class', 'full-for-print');
+wrapper.appendChild(instuctionTab);
 
-document.addEventListener('mousedown', changeRadius);
-document.addEventListener('mouseup', (event) => event.target.style.borderRadius = '3px');
+// changeRadius = (event) => {
+//   const name = event.target.className;
+//   document.querySelector(`.${name.split(' ')[2]}`).style.borderRadius = '50px';
+//   document.querySelector(`.${name.split(' ')[2]}`).style.backgroundColor = '#BF91ED';
+//   event.stopPropagation();
+// };
+
+// document.addEventListener('mousedown', changeRadius);
+// document.addEventListener('mouseup', (event) => event.target.style.borderRadius = '3px');
+// document.addEventListener('mouseup', (event) => event.target.style.backgroundColor = '#444444');
+
+
+
 
 // const buttn = document.querySelector('.tilda');
 // buttn.mousedown = function(event) {
@@ -108,9 +118,34 @@ for (let i = 0; i < keys.length; i += 1) {
   keys[i].setAttribute('ruUpperCase', symbolList[i][3]);
 }
 
+// window.addEventListener('mousedown', function(event) {
+//   for (let i = 0; i < keys.length; i += 1) {
+//     const id = event.target.
+//     console.log(event.key);
+//     if (event.key === keys[i].getAttribute('nameEn')
+//     || event.key === keys[i].getAttribute('enUpperCase')
+//     || event.key === keys[i].getAttribute('nameRu')
+//     || event.key === keys[i].getAttribute('ruUpperCase')) {
+//       keys[i].classList.add('active');
+//     }
+//     if (event.code == 'Space') {
+//       spaceKey.classList.add('active');
+//     }
+//     if (event.code == 'ShiftLeft') {
+//       shiftRight.classList.remove('active');
+//     }
+//     if (event.code == 'ShiftRight') {
+//       shiftLeft.classList.remove('active');
+//     }
+//     if (event.code == 'CapsLock') {
+//       CapsLock.classList.toggle('active');
+//     }
+//   }
+// })
+
 window.addEventListener('keydown', function(event) {
   for (let i = 0; i < keys.length; i += 1) {
-    console.log(event.key);
+    console.log(event.code);
     if (event.key === keys[i].getAttribute('nameEn')
     || event.key === keys[i].getAttribute('enUpperCase')
     || event.key === keys[i].getAttribute('nameRu')
@@ -118,13 +153,35 @@ window.addEventListener('keydown', function(event) {
       keys[i].classList.add('active');
     }
     if (event.code == 'Space') {
-      spaceKey.classList.add('active');
+      document.getElementById('Space').classList.add('active');
+    }
+    if (event.code == 'Delete') {
+      document.getElementById('Delete').classList.add('active');
+    }
+    if (event.code == 'MetaLeft') {
+      document.getElementById('MetaLeft').classList.add('active');
     }
     if (event.code == 'ShiftLeft') {
       shiftRight.classList.remove('active');
     }
     if (event.code == 'ShiftRight') {
       shiftLeft.classList.remove('active');
+    }
+    if (event.code == 'ControlLeft') {
+      document.getElementById('ControlLeft').classList.add('active');
+      document.getElementById('ControlRight').classList.remove('active');
+    }
+    if (event.code == 'ControlRight') {
+      document.getElementById('ControlRight').classList.add('active');
+      document.getElementById('ControlLeft').classList.remove('active');
+    }
+    if (event.code == 'AltLeft') {
+      document.getElementById('AltLeft').classList.add('active');
+      document.getElementById('AltRight').classList.remove('active');
+    }
+    if (event.code == 'AltRight') {
+      document.getElementById('AltRight').classList.add('active');
+      document.getElementById('AltLeft').classList.remove('active');
     }
     if (event.code == 'CapsLock') {
       CapsLock.classList.toggle('active');
@@ -143,12 +200,40 @@ window.addEventListener('keyup', function(event) {
       keys[i].classList.add('remove');
     }
     if (event.code == 'Space') {
-      spaceKey.classList.remove('active');
-      spaceKey.classList.add('remove');
+      document.getElementById('Space').classList.remove('active');
+      document.getElementById('Space').classList.add('remove');
+    }
+    if (event.code == 'Delete') {
+      document.getElementById('Delete').classList.remove('active');
+      document.getElementById('Delete').classList.add('remove');
+    }
+    if (event.code == 'MetaLeft') {
+      document.getElementById('MetaLeft').classList.remove('active');
+      document.getElementById('MetaLeft').classList.add('remove');
     }
     if (event.code == 'ShiftLeft') {
       shiftRight.classList.remove('active');
-      spaceKey.classList.remove('remove');
+      shiftRight.classList.remove('remove');
+    }
+    if (event.code == 'ShiftRight') {
+      shiftLeft.classList.remove('active');
+      shiftLeft.classList.remove('remove');
+    }
+    if (event.code == 'ControlLeft') {
+      document.getElementById('ControlLeft').classList.remove('active');
+      document.getElementById('ControlRight').classList.remove('remove');
+    }
+    if (event.code == 'ControlRight') {
+      document.getElementById('ControlRight').classList.remove('active');
+      document.getElementById('ControlLeft').classList.remove('remove');
+    }
+    if (event.code == 'AltLeft') {
+      document.getElementById('AltLeft').classList.remove('active');
+      document.getElementById('AltRight').classList.remove('remove');
+    }
+    if (event.code == 'AltRight') {
+      document.getElementById('AltRight').classList.remove('active');
+      document.getElementById('AltLeft').classList.remove('remove');
     }
     setTimeout(() =>{
       keys[i].classList.remove('remove')

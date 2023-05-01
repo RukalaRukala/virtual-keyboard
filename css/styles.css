@@ -46,7 +46,8 @@ h1 {
 }
 
 .system,
-.ctrl-alt {
+.ctrl-alt,
+.full-for-print {
   margin: 10px auto;
   text-align: center;
 }
