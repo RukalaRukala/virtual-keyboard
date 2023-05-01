@@ -112,12 +112,14 @@ runOnKeys(() => {
     if (span[i].classList[0] === 'eng' && span[i].classList.length === 1) {
       span[i].classList.add('hidden');
       span[i].querySelector('.caseDown').classList.add('hidden');
+      localStorage.lang = 'eng';
     } else if (span[i].classList[0] === 'eng' && span[i].classList.length === 2) {
       span[i].classList.remove('hidden');
       span[i].querySelector('.caseDown').classList.remove('hidden');
     } else if (span[i].classList[0] === 'rus' && span[i].classList.length === 1) {
       span[i].classList.add('hidden');
       span[i].querySelector('.caseDown').classList.add('hidden');
+      localStorage.lang = 'rus';
     } else if (span[i].classList[0] === 'rus' && span[i].classList.length === 2) {
       span[i].classList.remove('hidden');
       span[i].querySelector('.caseDown').classList.remove('hidden');
@@ -294,3 +296,31 @@ window.addEventListener('keyup', (event) => {
     }
   }
 });
+
+if (localStorage.lang === 'eng') {
+  for (let i = 0; i < span.length; i += 1) {
+    if (span[i].classList[0] === 'eng') {
+      span[i].classList.add('hidden');
+      span[i].querySelector('.caseDown').classList.add('hidden');
+    } else if (span[i].classList[0] === 'rus') {
+      span[i].classList.remove('hidden');
+      span[i].querySelector('.caseDown').classList.remove('hidden');
+    }
+  }
+  localStorage.lang = 'eng';
+}
+
+if (localStorage.lang === 'rus') {
+  for (let i = 0; i < span.length; i += 1) {
+    if (span[i].classList[0] === 'rus') {
+      span[i].classList.add('hidden');
+      span[i].querySelector('.caseDown').classList.add('hidden');
+    } else if (span[i].classList[0] === 'eng') {
+      span[i].classList.remove('hidden');
+      span[i].querySelector('.caseDown').classList.remove('hidden');
+    }
+  }
+  localStorage.lang = 'rus';
+}
+
+console.log(localStorage.lang)
