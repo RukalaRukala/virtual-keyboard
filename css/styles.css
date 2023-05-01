@@ -51,13 +51,13 @@ h1 {
   text-align: center;
 }
 
-.backspase,
-.caps-lock,
+.Backspace,
+.CapsLock,
 .shift-l {
   width: 100px;
 }
 
-.tab {
+.Tab {
   width: 50px;
 }
 
@@ -65,12 +65,12 @@ h1 {
   width: 44px;
 }
 
-.enter,
+.Enter,
 .shift-r {
   width: 86px;
 }
 
-.space {
+.Space {
   width: 330px;
 }
 
@@ -90,3 +90,24 @@ h1 {
 .keyboard-but:hover {
   background-color: #794F92;
 }
+
+.but.active {
+  border-radius: 50px;
+  background-color: #BF91ED;
+}
+
+.but.remove {
+  animation: key-animation 0.5s forwards;
+}
+
+@keyframes key-animation {
+  0% {
+    border-radius: 50px;
+    background-color: #BF91ED;
+  }
+  100% {
+    border-radius: 3px;
+    background-color: #444444;
+  }
+}
+
