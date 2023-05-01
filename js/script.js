@@ -12,14 +12,14 @@ const symbolList = [['`', '~', 'ё', 'Ё', 'tilda', 'let-ё'], ['1', '!', '1', '
 ['CapsLock', 'CapsLock', 'CapsLock', 'CapsLock', 'CapsLock black', 'CapsLock'], ['a', 'A', 'ф', 'Ф', 'let-a', 'let-ф'],
 ['s', 'S', 'ы', 'Ы', 'let-s', 'let-Ы'], ['d', 'D', 'в', 'В', 'let-d', 'let-в'], ['f', 'F', 'а', 'А', 'let-f', 'let-а'],
 ['g', 'G', 'п', 'П', 'let-g', 'let-п'], ['h', 'H', 'р', 'Р', 'let-h', 'let-р'], ['j', 'J', 'о', 'О', 'let-j', 'let-о'],
-['k', 'K', 'л', 'Л', 'let-k', 'let-л'], ['l', 'L', 'д', 'Д', 'let-l', 'let-Д'], [';', ':', 'ж', 'Ж', 'semi', 'let-ж'],
+['k', 'K', 'л', 'Л', 'let-k', 'let-л'], ['l', 'L', 'д', 'Д', 'let-l', 'let-Д'], [';', ':', 'ж', 'Ж', 'semi', 'Semicolon'],
 ['\'', '"', 'э', 'Э', 'quotes', 'let-э'], ['Enter', 'Enter', 'Enter', 'Enter', 'Enter black', 'Enter'],
-['Shift', 'Shift', 'Shift', 'Shift', 'shift shift-l black', 'Shift'],
+['Shift', 'Shift', 'Shift', 'Shift', 'shift shift-l black', 'ShiftLeft'],
 ['z', 'Z', 'я', 'Я', 'let-z', 'let-я'], ['x', 'X', 'ч', 'Ч', 'let-x', 'let-ч'],
 ['c', 'C', 'с', 'С', 'let-c', 'let-с'], ['v', 'V', 'м', 'М', 'let-v', 'let-м'], ['b', 'B', 'и', 'И', 'let-b', 'let-и'],
 ['n', 'N', 'т', 'Т', 'let-n', 'let-т'], ['m', 'M', 'ь', 'Ь', 'let-m', 'let-ь'], [',', '<', 'б', 'Б', 'comma', 'let-б'],
-['.', '>', 'ю', 'Ю', 'dot', 'let-ю'], ['/', '?', '.', ',', 'slash', 'let-.'], ['&#9650;', '&#9650;', '&#9650;', '&#9650;', 'but-up black', 'ArrowUp'],
-['Shift', 'Shift', 'Shift', 'Shift', 'shift shift-r black', 'Shift'],
+['.', '>', 'ю', 'Ю', 'dot', 'Period'], ['/', '?', '.', ',', 'slash', 'Slash'], ['&#9650;', '&#9650;', '&#9650;', '&#9650;', 'but-up black', 'ArrowUp'],
+['Shift', 'Shift', 'Shift', 'Shift', 'shift shift-r black', 'ShiftRight'],
 ['Ctrl', 'Ctrl', 'Ctrl', 'Ctrl', 'ctrl ctrl-l black', 'ControlLeft'], ['Win', 'Win', 'Win', 'Win', 'win black', 'MetaLeft'],
 ['Alt', 'Alt', 'Alt', 'Alt', 'alt alt-l black', 'AltLeft'], ['', '', '', '', 'Space', 'Space'],
 ['Alt', 'Alt', 'Alt', 'Alt', 'alt alt-r black', 'AltRight'], ['&#9668;', '&#9668;', '&#9668;', '&#9668;', 'but-left  black', 'ArrowLeft'],
@@ -73,7 +73,7 @@ discription.setAttribute('class', 'system');
 wrapper.appendChild(discription);
 
 const instuction = document.createElement('p');
-instuction.textContent = 'Для переключения языка комбинация: shift + alt (с любой стороны)';
+instuction.textContent = 'Для переключения языка комбинация: shift + alt (с левой стороны)';
 instuction.setAttribute('class', 'ctrl-alt');
 wrapper.appendChild(instuction);
 
@@ -83,8 +83,50 @@ instuctionTab.setAttribute('class', 'full-for-print');
 wrapper.appendChild(instuctionTab);
 
 const keys = document.querySelectorAll('.but');
-const shiftLeft = document.querySelector('.shift-l');
-const shiftRight = document.querySelector('.shift-r');
+
+function runOnKeys(func, ...codes) {
+  const pressed = new Set();
+
+  document.addEventListener('keydown', (event) => {
+    pressed.add(event.code);
+
+    for (const code of codes) {
+      if (!pressed.has(code)) {
+        return;
+      }
+    }
+    pressed.clear();
+
+    func();
+  });
+
+  document.addEventListener('keyup', (event) => {
+    pressed.delete(event.code);
+  });
+}
+
+const span = document.querySelectorAll('span');
+
+runOnKeys(() => {
+  for (let i = 0; i < span.length; i += 1) {
+    if (span[i].classList[0] === 'eng' && span[i].classList.length === 1) {
+      span[i].classList.add('hidden');
+      span[i].querySelector('.caseDown').classList.add('hidden');
+    } else if (span[i].classList[0] === 'eng' && span[i].classList.length === 2) {
+      span[i].classList.remove('hidden');
+      span[i].querySelector('.caseDown').classList.remove('hidden');
+    } else if (span[i].classList[0] === 'rus' && span[i].classList.length === 1) {
+      span[i].classList.add('hidden');
+      span[i].querySelector('.caseDown').classList.add('hidden');
+    } else if (span[i].classList[0] === 'rus' && span[i].classList.length === 2) {
+      span[i].classList.remove('hidden');
+      span[i].querySelector('.caseDown').classList.remove('hidden');
+    }
+  }
+},
+'AltLeft',
+'ShiftLeft',
+);
 
 for (let i = 0; i < keys.length; i += 1) {
   keys[i].setAttribute('nameEn', symbolList[i][0]);
@@ -101,7 +143,7 @@ window.addEventListener('mousedown', (event) => {
   if (elem.className.split(' ')[1] === 'but') {
     document.getElementById(elem.getAttribute('id')).classList.add('active');
   }
-})
+});
 
 window.addEventListener('mouseup', (event) => {
   const elem = event.target;
@@ -121,7 +163,7 @@ window.addEventListener('mouseenter', (event) => {
 
 window.addEventListener('keydown', (event) => {
   for (let i = 0; i < keys.length; i += 1) {
-    if (event.code !== 'CapsLock') {
+    if (event.code !== 'CapsLock' && event.key !== 'Shift' && event.code !== 'Period' && event.code !== 'Slash' && event.code !== 'Semicolon') {
       if (event.key === keys[i].getAttribute('nameEn')
       || event.key === keys[i].getAttribute('enUpperCase')
       || event.key === keys[i].getAttribute('nameRu')
@@ -136,12 +178,6 @@ window.addEventListener('keydown', (event) => {
       }
       if (event.code === 'MetaLeft') {
         document.getElementById('MetaLeft').classList.add('active');
-      }
-      if (event.code === 'ShiftLeft') {
-        shiftRight.classList.remove('active');
-      }
-      if (event.code === 'ShiftRight') {
-        shiftLeft.classList.remove('active');
       }
       if (event.code === 'ControlLeft') {
         document.getElementById('ControlLeft').classList.add('active');
@@ -176,8 +212,23 @@ window.addEventListener('keydown', (event) => {
         document.getElementById('ArrowLeft').classList.add('active');
       }
     }
+    if (event.code === 'ShiftLeft') {
+      document.getElementById('ShiftLeft').classList.add('active');
+    }
+    if (event.code === 'ShiftRight') {
+      document.getElementById('ShiftRight').classList.add('active');
+    }
+    if (event.code === 'Period') {
+      document.getElementById('Period').classList.add('active');
+    }
+    if (event.code === 'Slash') {
+      document.getElementById('Slash').classList.add('active');
+    }
+    if (event.code === 'Semicolon') {
+      document.getElementById('Semicolon').classList.add('active');
+    }
   }
-})
+});
 
 window.addEventListener('keyup', (event) => {
   for (let i = 0; i < keys.length; i += 1) {
@@ -198,12 +249,10 @@ window.addEventListener('keyup', (event) => {
         document.getElementById('MetaLeft').classList.remove('active');
       }
       if (event.code === 'ShiftLeft') {
-        shiftRight.classList.remove('active');
-        shiftRight.classList.remove('remove');
+        document.getElementById('ShiftLeft').classList.remove('active');
       }
       if (event.code === 'ShiftRight') {
-        shiftLeft.classList.remove('active');
-        shiftLeft.classList.remove('remove');
+        document.getElementById('ShiftLeft').classList.remove('active');
       }
       if (event.code === 'ControlLeft') {
         document.getElementById('ControlLeft').classList.remove('active');
